@@ -22,7 +22,7 @@ def register():
         db, c = get_db()
         error = None
         c.execute(
-            'select id from user where user = %s'
+            'select id from user where username = %s', (username,)
         )
         if not username:
             error = "Username es requerido"
@@ -47,12 +47,12 @@ def register():
 @bp.route('/login',methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.get('username')
-        password = request.get('password')
+        username = request.form['username']
+        password = request.form['password']
         db, c = get_db()
         error = None
         c.execute(
-            'select * from user where username = %s, (username,)'
+            'select * from user where username = %s', (username,)
         )
         user = c.fetchone() #sacar el usuario
 
